@@ -11,4 +11,41 @@ const getTodos = async () => {
   return todos;
 };
 
-export { getTodos };
+const addTodo = async (task: string) => {
+  try {
+    const res = await db.collection('todos').add({
+      description: task,
+      status: 'incomplete',
+    });
+    return res;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const deleteTodo = async (todo: any) => {
+  try {
+    const res = await db.collection('todos').doc(todo.id).delete();
+    return res;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const toggleCompletion = async (todo: any) => {
+  console.log(todo);
+  try {
+    const res = await db
+      .collection('todos')
+      .doc(todo.id)
+      .set({
+        description: todo.description,
+        status: todo.status === 'complete' ? 'incomplete' : 'complete',
+      });
+    return res;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export { getTodos, addTodo, deleteTodo, toggleCompletion };
