@@ -1,29 +1,16 @@
-import { json, LoaderArgs } from "@remix-run/node";
+import type { LoaderArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
+import { getTodos } from "~/api/todos";
 
 type Task = {
   id: number;
   description: string;
   status: string;
 }
-export async function loader({request}: LoaderArgs) {
-  const todos = [
-    {
-      id: 1,
-      description: 'Learn Remix',
-      status: 'incomplete'
-    },
-    {
-      id: 2,
-      description: "Learn about Web Fundamentals for Remix",
-      status: 'incomplete'
-    },
-    {
-      id: 3,
-      description: 'Facilitate Transformation Realised 23 - Remix Session',
-      status: 'incomplete'
-    }
-  ]
+export async function loader({ request }: LoaderArgs) {
+
+  const todos = await getTodos();
 
   return json({ todos });
 }
