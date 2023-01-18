@@ -55,6 +55,9 @@ export default function Index() {
   return (
     <div className="app-container">
       <h1 className="title">Transformation Realised - 2023</h1>
+      {todos.length === 0 ? (
+        <p className="empty-message">There are no todos create yet. Add some using the form below.</p>
+      ) : null}
       {todos.map((task: Task) => {
         return (
           <div key={task.id} className="todo-container">
