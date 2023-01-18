@@ -16,7 +16,7 @@ html, body {
 .create-task-container {
   display: grid;
   padding: 1rem 0;
-  grid-template-columns: 10fr 2fr;
+  grid-template-columns: 10fr 120px;
   gap: 0.5rem;
   width: 100%;
 }
