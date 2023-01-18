@@ -1,7 +1,7 @@
 import type { ActionArgs, LinksFunction, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, useLoaderData, useSubmit } from "@remix-run/react";
-import React from "react";
+import { Form, useLoaderData, useSubmit, useTransition } from "@remix-run/react";
+import React, { useRef, useEffect, MutableRefObject } from "react";
 import { getTodos, addTodo, deleteTodo, toggleCompletion } from "~/api/todos";
 import styles from '../styles/global.css';
 
@@ -47,10 +47,19 @@ export async function action({ request }: ActionArgs) {
 export default function Index() {
   const { todos } = useLoaderData();
   const submit = useSubmit();
+  let transition = useTransition();
+  let isAdding = transition.state === 'submitting' && transition.submission.formData.get('_action') === 'create';
+  let formRef: MutableRefObject<any> = useRef();
 
   const handleChange = (e: React.BaseSyntheticEvent) => {
     submit(e.currentTarget, { replace: true });
   }
+
+  useEffect(() => {
+    if(!isAdding) {
+      formRef.current?.reset();
+    }
+  }, [isAdding])
 
   return (
     <div className="app-container">
@@ -78,9 +87,9 @@ export default function Index() {
           </div>
         );
       })}
-      <Form method='post' className="create-task-container">
+      <Form ref={formRef} method='post' className="create-task-container">
         <input type="text" name="task" placeholder="What do you want to do?" />
-        <button type="submit" name="_action" value="create">Create task</button>
+        <button type="submit" name="_action" value="create">{isAdding ? 'Creating...' : 'Create task'}</button>
       </Form>
     </div>
   );
