@@ -17,7 +17,10 @@ const addTodo = async (task: string) => {
       description: task,
       status: 'incomplete',
     });
-    return res;
+    return {
+      message: 'The todo was added successfully',
+      response: res
+    };
   } catch (error: any) {
     throw new Error(error);
   }
@@ -26,7 +29,10 @@ const addTodo = async (task: string) => {
 const deleteTodo = async (todo: any) => {
   try {
     const res = await db.collection('todos').doc(todo.id).delete();
-    return res;
+    return {
+      message: 'The todo was deleted successfully',
+      response: res
+    };
   } catch (error: any) {
     throw new Error(error);
   }
@@ -41,7 +47,10 @@ const toggleCompletion = async (todo: any) => {
         description: todo.description,
         status: todo.status === 'complete' ? 'incomplete' : 'complete',
       });
-    return res;
+      return {
+        message: 'The todo was toggled successfully',
+        response: res
+      };
   } catch (error: any) {
     throw new Error(error);
   }
