@@ -30,19 +30,19 @@ export async function loader({ request }: LoaderArgs) {
 export async function action({ request }: ActionArgs) {
   let formData = await request.formData();
   let { _action, ...values } = Object.fromEntries(formData);
-
+  let res;
   if (_action === 'create') {
-    await addTodo(values.task as string);
+    res = await addTodo(values.task as string);
   }
   if (_action === 'delete') {
-    await deleteTodo(JSON.parse(values.task as any));
+    res = await deleteTodo(JSON.parse(values.task as any));
   }
 
   if (_action === 'status') {
-    await toggleCompletion(JSON.parse(values.task as any));
+    res = await toggleCompletion(JSON.parse(values.task as any));
 
   }
-  return null;
+  return res;
 }
 export default function Index() {
   const { todos } = useLoaderData();
