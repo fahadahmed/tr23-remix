@@ -4,6 +4,7 @@
   "scripts": {
     "build": "remix build",
     "dev": "remix build && run-p \"dev:*\"",
+    "dev:sass": "npx sass --load-path=../../../node_modules --no-source-map --watch app/:app/",
     "dev:node": "cross-env NODE_ENV=development nodemon --require dotenv/config ./server.js --watch ./server.js",
     "dev:remix": "remix watch",
     "start": "cross-env NODE_ENV=production node ./server.js",
@@ -21,7 +22,8 @@
     "isbot": "^3.6.5",
     "morgan": "^1.10.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sass": "^1.57.1"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.10.1",

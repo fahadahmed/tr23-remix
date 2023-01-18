@@ -33,7 +33,6 @@ const deleteTodo = async (todo: any) => {
 };
 
 const toggleCompletion = async (todo: any) => {
-  console.log(todo);
   try {
     const res = await db
       .collection('todos')
