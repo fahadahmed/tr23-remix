@@ -1,7 +1,7 @@
 import type { ActionArgs, LinksFunction, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useLoaderData, useSubmit } from "@remix-run/react";
-import React, { useState} from "react";
+import React from "react";
 import { getTodos, addTodo, deleteTodo, toggleCompletion } from "~/api/todos";
 import styles from '../styles/global.css';
 
@@ -47,14 +47,9 @@ export async function action({ request }: ActionArgs) {
 export default function Index() {
   const { todos } = useLoaderData();
   const submit = useSubmit();
-  const [status, setStatus] = useState('incomplete');
 
   const handleChange = (e: React.BaseSyntheticEvent) => {
     submit(e.currentTarget, { replace: true });
-  }
-
-  const toggleTask = (task: any) => {
-    setStatus(prevState => prevState === 'incomplete' ? 'complete' : 'incomplete');
   }
 
   return (
@@ -64,7 +59,7 @@ export default function Index() {
         return (
           <div key={task.id} className="todo-container">
             <Form method='post' onChange={handleChange}>
-              <input type="checkbox" aria-label="complete task" name="toggle" value={task.status} onChange={toggleTask} checked={task.status === 'complete'} />
+              <input type="checkbox" aria-label="complete task" name="toggle" value={task.status} onChange={() => {}} checked={task.status === 'complete'} />
               <input type="hidden" name="task" value={JSON.stringify(task)} />
               <input type="hidden" name="_action" value="status" />
             </Form>
