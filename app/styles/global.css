@@ -12,3 +12,43 @@ html, body {
 .title {
   color: #ffe600;
 }
+
+.create-task-container {
+  display: grid;
+  padding: 1rem 0;
+  grid-template-columns: 10fr 2fr;
+  gap: 0.5rem;
+  width: 100%;
+}
+.create-task-container input {
+  padding: 1rem;
+  font-size: 1rem;
+}
+.create-task-container button {
+  background: #ffe600;
+  border: 2px solid #ffe600;
+  padding: 1rem;
+  color: #2e2e38;
+  font-size: 1rem;
+}
+.create-task-container button:hover {
+  background: #747480;
+  border: 2px solid #747480;
+}
+
+.todo-container {
+  display: grid;
+  grid-template-columns: 50px 1fr 50px;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.delete-button {
+  border: none;
+  background: #747480;
+  color: #2e2e38;
+  font-size: 1rem;
+}
+.delete-button:hover {
+  background: #ffe600;
+}

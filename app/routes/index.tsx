@@ -11,6 +11,13 @@ type Task = {
   status: string;
 }
 
+export function meta() {
+  return {
+    title: 'Transformation Realised 2023 - Demo',
+    description: 'A introduction to Remix as a fullstack framework'
+  }
+}
+
 export function links() {
   return [{ rel: 'stylesheet', href: styles }];
 }
@@ -22,8 +29,7 @@ export async function loader({ request }: LoaderArgs) {
 
 export async function action({ request }: ActionArgs) {
   let formData = await request.formData();
-  let { _action, toggle, status, ...values } = Object.fromEntries(formData);
-  console.log(_action, values);
+  let { _action, ...values } = Object.fromEntries(formData);
 
   if (_action === 'create') {
     await addTodo(values.task as string);
@@ -56,21 +62,25 @@ export default function Index() {
       <h1 className="title">Transformation Realised - 2023</h1>
       {todos.map((task: Task) => {
         return (
-          <div key={task.id} style={{ display: 'flex' }}>
+          <div key={task.id} className="todo-container">
             <Form method='post' onChange={handleChange}>
-              <input type="checkbox" name="toggle" value={task.status} onChange={toggleTask} checked={task.status === 'complete'} />
+              <input type="checkbox" aria-label="complete task" name="toggle" value={task.status} onChange={toggleTask} checked={task.status === 'complete'} />
               <input type="hidden" name="task" value={JSON.stringify(task)} />
               <input type="hidden" name="_action" value="status" />
-              <span>{task.description}</span>
             </Form>
+            <span>{ task.status === 'complete' ? (
+                <s>{task.description}</s>
+              ) :
+                task.description
+              }</span>
             <Form method="post">
               <input type="hidden" name="task" value={JSON.stringify(task)} />
-              <button type="submit" name="_action" value="delete">x</button>
+              <button type="submit" name="_action" value="delete" className="delete-button">x</button>
             </Form>
           </div>
         );
       })}
-      <Form method='post'>
+      <Form method='post' className="create-task-container">
         <input type="text" name="task" placeholder="What do you want to do?" />
         <button type="submit" name="_action" value="create">Create task</button>
       </Form>
